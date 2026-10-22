@@ -10,6 +10,15 @@ all of them. freellm does that in one file with no dependencies.
 
 We have run this in production for months behind a LINE bot and several background workers.
 
+## Install
+
+```bash
+pip install git+https://github.com/junglin830/freellm
+freellm --help
+```
+
+Or just copy the single `.py` file — it has no dependencies.
+
 ## Features
 
 - **Round-robin** across every key of every provider (state kept in a tiny file, written atomically).
@@ -71,7 +80,8 @@ OK   pollinations   key#1 openai                                   3.5s 'ok'
 | `extra` | extra JSON fields merged into every request |
 | `keyless` | `true` for endpoints that need no key |
 
-Env: `FREELLM_CONFIG` (config path), `FREELLM_STATE_DIR` (where the rotation file lives),
+Config lookup: `./freellm.json` → `~/.freellm/freellm.json` → next to `freellm.py`.
+Env: `FREELLM_CONFIG` (config path), `FREELLM_STATE_DIR` (rotation state, default `~/.freellm`),
 `FREELLM_USAGE_LOG` (JSONL path), `FREELLM_QUIET=1` (no stderr logs).
 
 Free tiers, model names and terms change often — check each provider's docs and respect their terms of use.

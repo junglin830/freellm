@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "freellm-rotator"
+version = "1.1.0"
+description = "Rotate free LLM API keys across providers with automatic fallback"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+authors = [{name = "junglin830"}]
+keywords = ["llm","openai-compatible","groq","free-tier"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/junglin830/freellm"
+
+[project.scripts]
+freellm = "freellm:main"
+
+[tool.setuptools]
+py-modules = ["freellm"]

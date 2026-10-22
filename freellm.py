@@ -12,7 +12,7 @@ round-robin, and when one key is rate-limited or down it moves on to the next.
     r = chat([{"role": "user", "content": "Say hi"}])
     print(r["text"], r["provider"], r["key"])
 
-Config: freellm.json (path via FREELLM_CONFIG). Keys may be literal strings or
+Config: freellm.json, searched in ./, ~/.freellm/, then next to this file (or FREELLM_CONFIG). Keys may be literal strings or
 "env:NAME" to read from an environment variable (recommended).
 
 Pure standard library, Python 3.8+. MIT License.
@@ -25,11 +25,22 @@ import time
 import urllib.error
 import urllib.request
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CONFIG = os.environ.get("FREELLM_CONFIG", os.path.join(HERE, "freellm.json"))
-STATE_DIR = os.environ.get("FREELLM_STATE_DIR", HERE)
+
+
+def _default_config():
+    for c in (os.path.join(os.getcwd(), "freellm.json"),
+              os.path.join(os.path.expanduser("~"), ".freellm", "freellm.json"),
+              os.path.join(HERE, "freellm.json")):
+        if os.path.exists(c):
+            return c
+    return os.path.join(os.path.expanduser("~"), ".freellm", "freellm.json")
+
+
+CONFIG = os.environ.get("FREELLM_CONFIG") or _default_config()
+STATE_DIR = os.environ.get("FREELLM_STATE_DIR") or os.path.join(os.path.expanduser("~"), ".freellm")
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) freellm/" + __version__
 
 VISION_HINTS = ("gpt-4o", "gpt-4.1", "vision", "gemini", "llava", "qwen-vl", "qwen2-vl",
@@ -95,6 +106,7 @@ def _read_rr(config):
 def _write_rr(config, n):
     path = _state_path(config)
     try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
         fd, tmp = tempfile.mkstemp(dir=os.path.dirname(path) or ".")
         with os.fdopen(fd, "w") as f:
             f.write(str(n))
