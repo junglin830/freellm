@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "freellm-rotator"
-version = "1.1.0"
+version = "1.1.1"
 description = "Rotate free LLM API keys across providers with automatic fallback"
 readme = "README.md"
 license = {text = "MIT"}

@@ -25,7 +25,7 @@ import time
 import urllib.error
 import urllib.request
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -230,6 +230,11 @@ def main(argv=None):
     p.add_argument("--check", action="store_true", help="ping every configured key")
     p.add_argument("--max-tokens", type=int, default=1024)
     a = p.parse_args(argv)
+    cfg = a.config or CONFIG
+    if not os.path.exists(cfg):
+        print("ERROR: no config found at %s\nCreate it from freellm.example.json:\n"
+              "  https://github.com/junglin830/freellm/blob/main/freellm.example.json" % cfg, file=sys.stderr)
+        return 2
     if a.check:
         rows = check_all(a.config)
         for prov, idx, model, ok, detail in rows:
