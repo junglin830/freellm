@@ -1,0 +1,57 @@
+{
+  "_note": "Copy to freellm.json. Keys: use \"env:VAR_NAME\" so secrets stay out of the file. Free tiers and model names change often - check each provider's docs.",
+  "order": [
+    "groq",
+    "nvidia",
+    "gemini",
+    "openrouter",
+    "pollinations",
+    "github"
+  ],
+  "providers": {
+    "groq": {
+      "endpoint": "https://api.groq.com/openai/v1/chat/completions",
+      "model": "openai/gpt-oss-120b",
+      "keys": [
+        "env:GROQ_API_KEY",
+        "env:GROQ_API_KEY_2"
+      ]
+    },
+    "nvidia": {
+      "endpoint": "https://integrate.api.nvidia.com/v1/chat/completions",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
+      "keys": [
+        "env:NVIDIA_API_KEY"
+      ]
+    },
+    "gemini": {
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+      "model": "gemini-2.5-flash",
+      "keys": [
+        "env:GEMINI_API_KEY"
+      ]
+    },
+    "openrouter": {
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "model": "openai/gpt-oss-20b:free",
+      "keys": [
+        "env:OPENROUTER_API_KEY"
+      ]
+    },
+    "pollinations": {
+      "endpoint": "https://text.pollinations.ai/openai",
+      "model": "openai",
+      "keys": [
+        "env:POLLINATIONS_TOKEN"
+      ]
+    },
+    "github": {
+      "endpoint": "https://models.github.ai/inference/chat/completions",
+      "model": "openai/gpt-4o-mini",
+      "keys": [
+        "env:GITHUB_TOKEN"
+      ],
+      "enabled": false
+    }
+  }
+}
